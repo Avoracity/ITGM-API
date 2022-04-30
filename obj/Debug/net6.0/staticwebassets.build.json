@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Z87WJ9mZlEMqBKrpVupGejpX8tCEJJ0H5wajVqph1nY=",
+  "Source": "IntrogamiAPI",
+  "BasePath": "_content/IntrogamiAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
