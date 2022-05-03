@@ -12,7 +12,7 @@ builder.Services.AddDbContext<IntrogamiAPIDBContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
