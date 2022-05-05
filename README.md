@@ -13,29 +13,37 @@ For SQL constraints refer to https://www.w3schools.com/sql/sql_constraints.asp
 
 ## HTTP Methods
 
-#### Get all items
+#### Get all users
 
 ```http
-  GET /api/items
+  GET /api/users
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `api_key` | `string` | **Required**. Your API key |
 
-#### Get item
+#### Delete user
 
 ```http
-  GET /api/items/${id}
+  DELETE /api/users/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
-#### add(num1, num2)
+#### Post new user
 
-Takes two numbers and returns the sum.
+```http
+  POST /api/users/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to post  |
+
+
 
 ## SQL Constraints
 
