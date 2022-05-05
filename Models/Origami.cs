@@ -6,7 +6,7 @@
         public string? OrigamiName { get; set; }
         public string? OrigamiDesc { get; set; }
   
-
+        public List<Origami> Origamis = new();
 
     }
 }

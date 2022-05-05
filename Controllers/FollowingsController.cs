@@ -23,23 +23,46 @@ namespace IntrogamiAPI.Controllers
 
         // GET: api/Followings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Following>>> GetFollowings()
+        public async Task<ActionResult<Response>> GetFollowings()
         {
-            return await _context.Followings.ToListAsync();
+            var following = await _context.Followings.ToListAsync();
+            Response response = new()
+            {
+                StatusCode = 400,
+                StatusDesc = "Error retrieving ID"
+            };
+
+            if (following != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID Retrieval successful";
+                response.FollowingResponse = following;
+            }
+
+            return response;
         }
 
         // GET: api/Followings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Following>> GetFollowing(int id)
+        public async Task<ActionResult<Response>> GetFollowing(int id)
         {
-            var following = await _context.Followings.FindAsync(id);
 
-            if (following == null)
+            var following = await _context.Followings.FindAsync(id);
+            Response response = new()
             {
-                return NotFound();
+                StatusCode = 400,
+                StatusDesc = "Error retrieving ID"
+            };
+
+            if (following != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID Retrieval successful";
+                response.FollowingResponse = new();
+                response.FollowingResponse.Add(following);
             }
 
-            return following;
+            return response;
         }
 
         // PUT: api/Followings/5
@@ -73,32 +96,9 @@ namespace IntrogamiAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Followings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Following>> PostFollowing(Following following)
-        {
-            _context.Followings.Add(following);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFollowing", new { id = following.FollowingId }, following);
-        }
 
-        // DELETE: api/Followings/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFollowing(int id)
-        {
-            var following = await _context.Followings.FindAsync(id);
-            if (following == null)
-            {
-                return NotFound();
-            }
 
-            _context.Followings.Remove(following);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
 
         private bool FollowingExists(int id)
         {

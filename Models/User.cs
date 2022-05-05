@@ -5,8 +5,9 @@
         public int UserId { get; set; }
         public string? UserName { get; set; }
 
-        public int OrigamiId { get; set; }
+        public int OrigamiId { get; set; } // foreign key
 
+        public List<User> Users = new();
 
 
 

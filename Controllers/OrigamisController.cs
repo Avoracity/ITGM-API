@@ -23,86 +23,100 @@ namespace IntrogamiAPI.Controllers
 
         // GET: api/Origamis
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Origami>>> GetOrigamis()
+        public async Task<ActionResult<Response>> GetOrigamis()
         {
-            return await _context.Origamis.ToListAsync();
+            var origami = await _context.Origamis.ToListAsync();
+            Response response = new()
+            {
+                StatusCode = 400,
+                StatusDesc = "Error retrieving ID"
+            };
+
+            if (origami != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID Retrieval successful";
+                response.OrigamiResponse = origami;
+            }
+
+            return response;
         }
 
         // GET: api/Origamis/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Origami>> GetOrigami(int id)
+        public async Task<ActionResult<Response>> GetOrigami(int id)
         {
             var origami = await _context.Origamis.FindAsync(id);
-
-            if (origami == null)
+            Response response = new()
             {
-                return NotFound();
+                StatusCode = 400,
+                StatusDesc = "Error retrieving ID"
+            };
+
+            if (origami != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID Retrieval successful";
+                response.OrigamiResponse = new();
+                response.OrigamiResponse.Add(origami);
             }
 
-            return origami;
+            return response;
         }
 
-        // PUT: api/Origamis/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrigami(int id, Origami origami)
-        {
-            if (id != origami.OrigamiId)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(origami).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrigamiExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
+        /*
         // POST: api/Origamis
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Origami>> PostOrigami(Origami origami)
+        public async Task<ActionResult<Response>> PostOrigami(Origami origami)
         {
+            
             _context.Origamis.Add(origami);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrigami", new { id = origami.OrigamiId }, origami);
+
+            Response response = new()
+            {
+                StatusCode = 400,
+                StatusDesc = "Error posting ID"
+            };
+
+            var origami = CreatedAtAction("GetOrigami", new { id = origami.OrigamiId }, origami);
+
+            if (origami != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID posting successful";
+            }
+
+            return response;
         }
+        */
 
         // DELETE: api/Origamis/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrigami(int id)
+        public async Task<ActionResult<Response>> DeleteOrigami(int id)
         {
             var origami = await _context.Origamis.FindAsync(id);
-            if (origami == null)
+
+            Response response = new()
             {
-                return NotFound();
+                StatusCode = 400,
+                StatusDesc = "Error deleting ID"
+            };
+
+            if (origami != null)
+            {
+                response.StatusCode = 200;
+                response.StatusDesc = "ID deletion successful";
+
+                _context.Origamis.Remove(origami);
+                await _context.SaveChangesAsync();
             }
-
-            _context.Origamis.Remove(origami);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return response;
         }
 
-        private bool OrigamiExists(int id)
-        {
-            return _context.Origamis.Any(e => e.OrigamiId == id);
-        }
+   
     }
 }

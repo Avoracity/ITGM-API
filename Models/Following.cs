@@ -6,7 +6,11 @@
 
         public List<User> followContainer = new();
 
-       public int UserId { get; set; }
+        public List<Following> Followings = new();
+
+        public int UserId { get; set; } // foreign key
+
+
 
     }
 }

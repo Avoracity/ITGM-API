@@ -4,5 +4,11 @@
     {
         public int StatusCode;
         public string? StatusDesc;
+
+        public List<User>? UserResponse = new();
+        public List<Origami>? OrigamiResponse = new();
+        public List<Following>? FollowingResponse = new();
+
+
     }
 }
